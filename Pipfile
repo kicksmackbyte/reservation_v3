@@ -12,6 +12,7 @@ hypothesis = "*"
 invoke = "*"
 pre-commit = "*"
 django-stubs = "*"
+django-silk = "*"
 typing-extensions = "*"
 
 [packages]
