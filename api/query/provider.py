@@ -15,6 +15,7 @@ class ProviderType(graphene.ObjectType):
 
     available_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
     reserved_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
+    confirmed_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
 
     schedule = graphene.Field('api.query.appointment.AppointmentConnection')
 
@@ -31,17 +32,38 @@ class ProviderType(graphene.ObjectType):
 
     @staticmethod
     def resolve_available_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
-        return info.context.loaders.provider_available_appointments.load(key)
+
+        appointment_ids = info.context.loaders.provider_available_appointments.load(root.id)
+        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
+
+        return appointments
 
 
     @staticmethod
     def resolve_reserved_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
-        return info.context.loaders.provider_reserved_appointments.load(key)
+
+        appointment_ids = info.context.loaders.provider_reserved_appointments.load(root.id)
+        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
+
+        return appointments
+
+
+    @staticmethod
+    def resolve_confirmed_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+
+        appointment_ids = info.context.loaders.provider_confirmed_appointments.load(root.id)
+        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
+
+        return appointments
 
 
     @staticmethod
     def resolve_schedule(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
-        return info.context.loaders.provider_schedule.load(key)
+
+        appointment_ids = info.context.loaders.provider_schedule.load(root.id)
+        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
+
+        return appointments
 
 
     @classmethod

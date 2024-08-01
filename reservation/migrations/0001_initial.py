@@ -31,4 +31,15 @@ class Migration(migrations.Migration):
                 ('time_slot', models.DateTimeField()),
             ],
         ),
+        migrations.CreateModel(
+            name='Reservation',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('expiry', models.DateTimeField(default='reservation.models.reservation.calculate_expiry')),
+                ('confirmed', models.BooleanField(default=False)),
+                ('appointment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='reservation.appointment')),
+                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='reservation.client')),
+                ('provider', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='reservation.provider')),
+            ],
+        ),
     ]
