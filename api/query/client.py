@@ -12,10 +12,17 @@ class ClientType(graphene.ObjectType):
 
     first_name = graphene.String()
 
+    reserved_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
+
 
     @staticmethod
     def resolve_first_name(root: Any, info: graphene.ResolveInfo) -> graphene.String:
         return root.first_name
+
+
+    @staticmethod
+    def resolve_reserved_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.client_reserved_appointments.load(root.id)
 
 
     @classmethod
