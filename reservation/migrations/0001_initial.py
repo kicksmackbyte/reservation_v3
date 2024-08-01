@@ -24,4 +24,11 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=100)),
             ],
         ),
+        migrations.CreateModel(
+            name='Appointment',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('time_slot', models.DateTimeField()),
+            ],
+        ),
     ]
