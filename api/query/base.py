@@ -1,7 +1,7 @@
-from .model import Query as ModelQuery
+from .provider import Query as ProviderQuery
 
 
 class Query(
-    ModelQuery,
+    ProviderQuery,
 ):
     pass

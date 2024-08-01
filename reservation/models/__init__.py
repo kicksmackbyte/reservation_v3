@@ -1,4 +1,4 @@
-from .model import Model
+from .provider import Provider
 
 
-__all__ = ('Model', )
+__all__ = ('Provider', )

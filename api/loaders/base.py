@@ -1,6 +1,6 @@
-from .model import ModelLoaders
+from .provider import ProviderLoaders
 
 class Loaders(
-    ModelLoaders,
+    ProviderLoaders,
 ):
     pass
