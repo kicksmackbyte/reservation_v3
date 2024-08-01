@@ -13,6 +13,8 @@ class ProviderType(graphene.ObjectType):
     first_name = graphene.String()
     last_name = graphene.String()
 
+    clients = graphene.Field('api.query.client.ClientConnection')
+
     available_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
     reserved_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
     confirmed_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
@@ -28,6 +30,16 @@ class ProviderType(graphene.ObjectType):
     @staticmethod
     def resolve_last_name(root: Any, info: graphene.ResolveInfo) -> graphene.String:
         return root.last_name
+
+
+    @staticmethod
+    def resolve_clients(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+
+        reserved_appointments = ProviderType.resolve_confirmed_appointments(root, info)
+        client_ids = reserved_appointments.then(lambda res: [r.client_id for r in res])
+        clients = client_ids.then(lambda res: [info.context.loaders.client.load(id_) for id_ in res])
+
+        return clients
 
 
     @staticmethod
