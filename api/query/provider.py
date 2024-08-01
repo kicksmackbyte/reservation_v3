@@ -11,11 +11,37 @@ class ProviderType(graphene.ObjectType):
         interfaces = (graphene.Node, )
 
     first_name = graphene.String()
+    last_name = graphene.String()
+
+    available_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
+    reserved_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
+
+    schedule = graphene.Field('api.query.appointment.AppointmentConnection')
 
 
     @staticmethod
     def resolve_first_name(root: Any, info: graphene.ResolveInfo) -> graphene.String:
         return root.first_name
+
+
+    @staticmethod
+    def resolve_last_name(root: Any, info: graphene.ResolveInfo) -> graphene.String:
+        return root.last_name
+
+
+    @staticmethod
+    def resolve_available_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.provider_available_appointments.load(key)
+
+
+    @staticmethod
+    def resolve_reserved_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.provider_reserved_appointments.load(key)
+
+
+    @staticmethod
+    def resolve_schedule(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.provider_schedule.load(key)
 
 
     @classmethod
