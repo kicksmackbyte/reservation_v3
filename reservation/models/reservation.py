@@ -9,7 +9,6 @@ def calculate_expiry():
 class Reservation(models.Model):
 
     client = models.ForeignKey('reservation.Client', on_delete=models.CASCADE)
-    provider = models.ForeignKey('reservation.Provider', on_delete=models.CASCADE)
     appointment = models.ForeignKey('reservation.Appointment', on_delete=models.CASCADE)
 
     expiry = models.DateTimeField(default=calculate_expiry)

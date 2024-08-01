@@ -11,11 +11,17 @@ class AppointmentType(graphene.ObjectType):
         interfaces = (graphene.Node, )
 
     time_slot = graphene.DateTime()
+    provider = graphene.Field('api.query.provider.ProviderType')
 
 
     @staticmethod
     def resolve_time_slot(root: Any, info: graphene.ResolveInfo) -> graphene.String:
         return root.time_slot
+
+
+    @staticmethod
+    def resolve_provider(root: Any, info: graphene.ResolveInfo) -> graphene.String:
+        return info.context.loaders.provider.load(root.provider_id)
 
 
     @classmethod
