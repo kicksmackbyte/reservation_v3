@@ -11,6 +11,6 @@
     - Reference Data
 * [reservation.py](reservation.py)
     - Transactional Data
-    - calculates expiration date at time of creation with an offset of 30 min
+    - calculates expiration date at time of creation with an `EXPIRATION_OFFSET` of 30 min
         * configurable in [settings](../../settings/__init__.py#L82)
     - uses a custom model manager to provide a convenience filter for [active reservations](reservation.py#15) by filtering out all instances whose expiration date has passed
