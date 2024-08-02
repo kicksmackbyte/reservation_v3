@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  django:
+    build:
+      dockerfile: devops/Dockerfile.development
+    command: gunicorn reservation.wsgi --name reservation-service --workers 3 --bind 0.0.0.0:8000
+    expose:
+      - 8000
+  nginx:
+    build:
+      dockerfile: devops/Dockerfile.nginx
+    ports:
+      - 80:80
+    depends_on:
+      - django
