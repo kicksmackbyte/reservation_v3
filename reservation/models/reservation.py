@@ -11,7 +11,7 @@ def calculate_expiry():
 class ActiveReservationManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(confirmed=False, expiry__lt=timezone.now())
+        return super().get_queryset().filter(confirmed=False, expiry__gte=timezone.now())
 
 
 class ConfirmedReservationManager(models.Manager):
@@ -23,7 +23,7 @@ class ConfirmedReservationManager(models.Manager):
 class ExpiredReservationManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(confirmed=False, expiry__gte=timezone.now())
+        return super().get_queryset().filter(confirmed=False, expiry__lt=timezone.now())
 
 
 class Reservation(models.Model):

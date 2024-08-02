@@ -16,7 +16,9 @@ class ClientType(graphene.ObjectType):
     providers = graphene.ConnectionField('api.query.provider.ProviderConnection')
 
     reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
+    active_reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
     confirmed_reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
+    expired_reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
 
 
     @staticmethod
@@ -32,7 +34,7 @@ class ClientType(graphene.ObjectType):
     @staticmethod
     def resolve_providers(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
 
-        reservations = info.context.loaders.client_reservations.load(root.id)
+        reservations = info.context.loaders.reservations_from_client.load(root.id)
 
         appointment_ids = reservations.then(lambda res: [r.appointment_id for r in res])
         appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
@@ -45,16 +47,22 @@ class ClientType(graphene.ObjectType):
 
     @staticmethod
     def resolve_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
-        return info.context.loaders.client_reservations.load(root.id)
+        return info.context.loaders.reservations_from_client.load(root.id)
+
+
+    @staticmethod
+    def resolve_active_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.active_reservations_from_client.load(root.id)
 
 
     @staticmethod
     def resolve_confirmed_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.confirmed_reservations_from_client.load(root.id)
 
-        reservations = info.context.loaders.client_reservations.load(root.id)
-        confirmed_reservations = reservations.then(lambda res: [r for r in res if r.confirmed])
 
-        return confirmed_reservations
+    @staticmethod
+    def resolve_expired_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.expired_reservations_from_client.load(root.id)
 
 
     @classmethod

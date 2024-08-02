@@ -86,12 +86,14 @@ def batch_load_primary_key(app_name, model_name):
     return batch_load_fn
 
 
-def batch_load_foreign_key(app_name, model_name, foreign_key_name):
+
+def batch_load_foreign_key(app_name, model_name, foreign_key_name, manager_name='objects'):
     model_to_load = apps.get_model(app_name, model_name)
-    # key_field = model_to_load._meta.get_field(foreign_key_name)
+    manager = getattr(model_to_load, manager_name)
+
     def load(foreign_keys):
         condition = {f'{foreign_key_name}_id__in':foreign_keys}
-        return model_to_load.objects.filter(**condition)
+        return manager.filter(**condition)
 
     def batch_load_fn(model_ids):
         model_records = load(model_ids)
