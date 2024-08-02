@@ -1,0 +1,24 @@
+mutation ReservationConfirm($input: ReservationConfirmInput!) {
+  reservationConfirm(input: $input) {
+    reservation {
+      id
+      expiry
+      expired
+      confirmed
+      client {
+        id
+        firstName
+        lastName
+      }
+      provider {
+        id
+        firstName
+        lastName
+      }
+      appointment {
+        id
+        timeSlot
+      }
+    }
+  }
+}

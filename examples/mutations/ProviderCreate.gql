@@ -1,0 +1,9 @@
+mutation ProviderCreate($input: ProviderCreateInput!) {
+  providerCreate(input: $input) {
+    provider {
+      id
+      firstName
+      lastName
+    }
+  }
+}
