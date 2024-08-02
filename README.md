@@ -9,7 +9,7 @@
 2. server will be running at http://localhost/graphql
     - can run introspection query on postman to explore schema
 
-## Examples
+* See [Examples](examples/README.md)
 
 # Repo Overview
 ## top-level
@@ -21,8 +21,11 @@
 * `Pipfile` + `Pipfile.lock`
     - used by `pipenv` to install dependencies + manage virtualenv
 * [api](api/README.md)
+    - graphQL specific code
 * [devops](devops/README.md)
+    - Dockerfile(s)
 * [reservation](reservation/README.md)
+    - data model
 * [settings](settings/README.md)
 
 # Limitations
@@ -31,6 +34,8 @@
 * Would keep an eye on the above and determine if horizontal scaling is appropriate based on access patterns or if better to migrate to a more performant stack
 
 # TODO
+## QOL features
+* add common filters + sorting to API
 
 ## Testing
 * test data model
