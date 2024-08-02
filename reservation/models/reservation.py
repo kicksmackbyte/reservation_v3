@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 import datetime
 
 
 def calculate_expiry():
-    return timezone.now() + datetime.timedelta(minutes=30)
+    return timezone.now() + datetime.timedelta(**settings.EXPIRATION_OFFSET)
 
 
 class ActiveReservationManager(models.Manager):

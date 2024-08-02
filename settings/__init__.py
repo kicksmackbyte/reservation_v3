@@ -77,3 +77,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 BATCH_SIZE = 10000
 LOADER_BATCH_SIZE = 10000
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+TIME_SLOT_LENGTH = 15
+ADVANCED_NOTICE = {'days': 1}
+EXPIRATION_OFFSET = {'minutes': 30}

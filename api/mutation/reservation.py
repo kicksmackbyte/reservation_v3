@@ -31,6 +31,9 @@ class ReservationCreate(graphene.Mutation):
 
         appointment_id = input_.pop('appointment_id')
         decoded_appointment_id = int(from_global_id(appointment_id).type_id)
+
+        #NOTE: Throws error if appointment is not available
+        #TODO: Race condition
         appointment = Appointment.available_objects.get(id=decoded_appointment_id)
 
         reservation = Reservation.objects.create(client=client, appointment=appointment)
@@ -57,6 +60,8 @@ class ReservationConfirm(graphene.Mutation):
         reservation_id = input_.pop('reservation_id')
         decoded_reservation_id = int(from_global_id(reservation_id).type_id)
         reservation = Reservation.objects.get(id=decoded_reservation_id)
+
+        #TODO: Attach JWT with user_id to verify they own this reservation
 
         if reservation.expired:
             raise GraphQLError('Reservation has expired.')
