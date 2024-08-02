@@ -1,6 +1,6 @@
 from django.utils.functional import cached_property
 
-from .utils import batch_load_primary_key, batch_load_many_to_many_key, DataLoader
+from .utils import batch_load_primary_key, batch_load_foreign_key, batch_load_many_to_many_key, DataLoader
 
 
 class AppointmentLoaders:
@@ -11,38 +11,25 @@ class AppointmentLoaders:
         return DataLoader(appointment_load_fn)
 
 
-    #TODO: Use object managers for reserved/confirmed/available
     @cached_property
-    def client_reserved_appointments(self) -> DataLoader:
-        appointment_load_fn = batch_load_many_to_many_key('reservation', 'Reservation', 'client', 'appointment_id')
+    def appointments_from_provider(self) -> DataLoader:
+        appointment_load_fn = batch_load_foreign_key('reservation', 'Appointment', 'provider')
         return DataLoader(appointment_load_fn)
 
 
     @cached_property
-    def client_confirmed_appointments(self) -> DataLoader:
-        appointment_load_fn = batch_load_many_to_many_key('reservation', 'Reservation', 'client', 'appointment_id')
+    def available_appointments_from_provider(self) -> DataLoader:
+        appointment_load_fn = batch_load_foreign_key('reservation', 'Appointment', 'provider', manager_name='available_objects')
         return DataLoader(appointment_load_fn)
 
 
     @cached_property
-    def provider_available_appointments(self) -> DataLoader:
-        appointment_load_fn = batch_load_many_to_many_key('reservation', 'Reservation', 'appointment__provider', 'appointment_id')
+    def confirmed_appointments_from_provider(self) -> DataLoader:
+        appointment_load_fn = batch_load_foreign_key('reservation', 'Appointment', 'provider', manager_name='confirmed_objects')
         return DataLoader(appointment_load_fn)
 
 
     @cached_property
-    def provider_reserved_appointments(self) -> DataLoader:
-        appointment_load_fn = batch_load_many_to_many_key('reservation', 'Reservation', 'appointment__provider', 'appointment_id')
-        return DataLoader(appointment_load_fn)
-
-
-    @cached_property
-    def provider_confirmed_appointments(self) -> DataLoader:
-        appointment_load_fn = batch_load_many_to_many_key('reservation', 'Reservation', 'appointment__provider', 'appointment_id')
-        return DataLoader(appointment_load_fn)
-
-
-    @cached_property
-    def provider_schedule(self) -> DataLoader:
-        appointment_load_fn = batch_load_many_to_many_key('reservation', 'Reservation', 'appointment__provider', 'appointment_id')
+    def reserved_appointments_from_provider(self) -> DataLoader:
+        appointment_load_fn = batch_load_foreign_key('reservation', 'Appointment', 'provider', manager_name='reserved_objects')
         return DataLoader(appointment_load_fn)

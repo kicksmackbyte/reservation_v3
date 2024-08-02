@@ -28,6 +28,16 @@ class ConfirmedAppointmentManager(models.Manager):
         return super().get_queryset().filter(id__in=confirmed_appointment_ids)
 
 
+class ReservedAppointmentManager(models.Manager):
+
+    def get_queryset(self):
+
+        reservations = Reservation.objects.all()
+        reserved_appointment_ids = [r.appointment_id for r in reservations]
+
+        return super().get_queryset().filter(id__in=reserved_appointment_ids)
+
+
 class Appointment(models.Model):
 
     time_slot = models.DateTimeField()
@@ -36,3 +46,4 @@ class Appointment(models.Model):
     objects = models.Manager()
     available_objects = AvailableAppointmentManager()
     confirmed_objects = ConfirmedAppointmentManager()
+    reserved_objects = ReservedAppointmentManager()
