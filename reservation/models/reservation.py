@@ -26,5 +26,6 @@ class Reservation(models.Model):
     expiry = models.DateTimeField(default=calculate_expiry)
     confirmed = models.BooleanField(default=False)
 
+    objects = models.Manager()
     confirmed_objects = ConfirmedAppointmentManager()
     reserved_objects = ReservedAppointmentManager()
