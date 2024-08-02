@@ -1,5 +1,5 @@
 # ERD
-[[ERD.png]]
+![ERD.png](ERD.png)
 
 * `appointment.py`
 * `client.py`
