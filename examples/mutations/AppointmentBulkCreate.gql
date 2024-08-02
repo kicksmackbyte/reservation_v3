@@ -1,0 +1,17 @@
+mutation AppointmentBulkCreate($input:AppointmentBulkCreateInput!) {
+  appointmentBulkCreate(input: $input) {
+    appointments {
+      edges {
+        node {
+          id
+          timeSlot
+          provider {
+            id
+            firstName
+            lastName
+          }
+        }
+      }
+    }
+  }
+}
