@@ -49,6 +49,11 @@ class ReservationType(graphene.ObjectType):
         return provider
 
 
+    @staticmethod
+    def resolve_appointment(root: Any, info: graphene.ResolveInfo) -> graphene.String:
+        return info.context.loaders.appointment.load(root.appointment_id)
+
+
     @classmethod
     def is_type_of(cls, root: Any, info: graphene.ResolveInfo) -> bool:
         return isinstance(root, Reservation)
