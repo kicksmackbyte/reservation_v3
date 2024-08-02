@@ -1,7 +1,7 @@
 # mutation
 ## AppointmentBulkCreate
 * See [appointment.py](appointment.py#29)
-![AppointmentBulkCreate](../../examples/mutations/AppointmentBulkCreate.gql)
+{{../../examples/mutations/AppointmentBulkCreate.gql}}
 
 ## ClientCreate
 * See [client.py](client.py#24)
