@@ -1,5 +1,5 @@
 # mutation
-* Limatations presented here should be captured as test cases to explicitly define specification
+* Limitations presented here should be captured as test cases to explicitly define specification
 
 ## AppointmentBulkCreate
 ```
