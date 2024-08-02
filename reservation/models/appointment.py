@@ -10,7 +10,7 @@ class AvailableAppointmentManager(models.Manager):
 
     def get_queryset(self):
 
-        reservations = Reservation.confirmed_objects.all() | Reservation.reserved_objects.all()
+        reservations = Reservation.confirmed_objects.all() | Reservation.active_objects.all()
         appointment_ids = [r.appointment_id for r in reservations]
 
         advanced_notice = timezone.now() + datetime.timedelta(**ADVANCED_NOTICE)
