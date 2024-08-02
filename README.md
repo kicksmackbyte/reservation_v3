@@ -20,7 +20,7 @@
         * See [Provider](reservation/models/provider.py) model
     - clients
         * want to book an appointment time, in advance, from provider schedule
-        * See [Client(reservation/models/client.py) model
+        * See [Client](reservation/models/client.py) model
 
 ## Task
 
