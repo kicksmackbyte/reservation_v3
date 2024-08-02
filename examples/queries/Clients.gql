@@ -5,57 +5,6 @@ query Clients {
         id
         firstName
         lastName
-        reservations {
-          edges {
-            node {
-              id
-              expiry
-              expired
-              confirmed
-              appointment {
-                id
-                timeSlot
-              }
-              provider {
-                id
-                firstName
-                lastName
-              }
-            }
-          }
-        }
-        activeReservations {
-          edges {
-            node {
-              id
-              appointment {
-                id
-                timeSlot
-              }
-              provider {
-                id
-                firstName
-                lastName
-              }
-            }
-          }
-        }
-        confirmedReservations {
-          edges {
-            node {
-              id
-              appointment {
-                id
-                timeSlot
-              }
-              provider {
-                id
-                firstName
-                lastName
-              }
-            }
-          }
-        }
       }
     }
   }
