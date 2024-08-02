@@ -1,0 +1,15 @@
+query AvailableAppointments {
+  availableAppointments {
+    edges {
+      node {
+        id
+        timeSlot
+        provider {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+}

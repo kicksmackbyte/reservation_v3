@@ -1,0 +1,35 @@
+query Providers{
+  providers {
+    edges {
+      node {
+        id
+        firstName
+        lastName
+        availableAppointments {
+          edges {
+            node {
+              id
+              timeSlot
+            }
+          }
+        }
+        confirmedAppointments {
+          edges {
+            node {
+              id
+              timeSlot
+              reservation: confirmedReservation {
+                id
+                client {
+                  id
+                  firstName
+                  lastName
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
