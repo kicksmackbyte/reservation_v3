@@ -21,6 +21,6 @@ graphene-django = "==2.16.0"
 psycopg2-binary = "*"
 
 [requires]
-python_version = "3"
+python_full_version = "3.11.9"
 
 [scripts]
