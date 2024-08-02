@@ -11,6 +11,36 @@
 
 * See [Examples](examples/README.md)
 
+# Prompt
+## Scenario
+
+* Henry has two kinds of users
+    - providers
+        * has a schedule where they are available to see clients
+        * See [Provider](reservation/models/provider.py) model
+    - clients
+        * want to book an appointment time, in advance, from provider schedule
+        * See [Client(reservation/models/client.py) model
+
+## Task
+
+* Build an API with the following endpoints:
+    - allows providers to submit times they are available for appointments
+        * See [AppointmentBulkCreate](api/mutation/appointment.py#29) mutation
+    - allows clients to retrieve a list of available appointment slots
+        * See [availableAppointments](api/query/appointment.py#88) query
+    - allows clients to reserve an available appointment slot
+        * See [ReservationCreate](api/mutation/reservation.py#26) mutation
+    - allows clients to confirm their reservation
+        * See [ReservationConfirm](api/mutation/reservation.py#58) mutation
+
+* Additional Requirements
+    - reservations expire after 30 minutes if not confirmed and are again available for other clients to reserve that appointment slot
+        * See [explanation](reservation/models/README.md)
+    - reservations must be made at least 24 hours in advance
+        * See [explanation](reservation/models/README.md)
+
+
 # Repo Overview
 ## top-level
 * `compose.yml`
