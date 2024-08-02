@@ -9,6 +9,7 @@
 2. server will be running at http://localhost/graphql
     - can run introspection query on postman to explore schema
 
+![POSTMAN.png](examples/images/POSTMAN.png)
 * See [Examples](examples/README.md)
 
 # Prompt
