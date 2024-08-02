@@ -65,8 +65,8 @@
     - `DATABASES` for different configs
 
 # Limitations
-* Django (ORM is synchronous)[https://docs.gunicorn.org/en/latest/design.html#how-many-workers]
-* gunicorn recommends ((2 x $numcores) + 1 worker threads)[https://docs.gunicorn.org/en/latest/design.html#how-many-workers]
+* Django [ORM is synchronous](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
+* gunicorn recommends [(2 x $numcores) + 1 worker threads](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 * Would keep an eye on the above and determine if horizontal scaling is appropriate based on access patterns or if better to migrate to a more performant stack
 
 # TODO
