@@ -26,5 +26,5 @@ class Appointment(models.Model):
     time_slot = models.DateTimeField()
     provider = models.ForeignKey('reservation.Provider', on_delete=models.CASCADE)
 
-    available_appointments = AvailableAppointmentManager()
-    confirmed_appointments = ConfirmedAppointmentManager()
+    available_objects = AvailableAppointmentManager()
+    confirmed_objects = ConfirmedAppointmentManager()

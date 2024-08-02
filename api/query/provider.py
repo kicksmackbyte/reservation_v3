@@ -35,8 +35,8 @@ class ProviderType(graphene.ObjectType):
     @staticmethod
     def resolve_clients(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
 
-        reserved_appointments = ProviderType.resolve_confirmed_appointments(root, info)
-        client_ids = reserved_appointments.then(lambda res: [r.client_id for r in res])
+        confirmed_appointments = ProviderType.resolve_confirmed_appointments(root, info)
+        client_ids = confirmed_appointments.then(lambda res: [r.client_id for r in res])
         clients = client_ids.then(lambda res: [info.context.loaders.client.load(id_) for id_ in res])
 
         return clients
