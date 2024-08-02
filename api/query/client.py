@@ -15,8 +15,8 @@ class ClientType(graphene.ObjectType):
 
     providers = graphene.ConnectionField('api.query.provider.ProviderConnection')
 
-    reserved_appointments = graphene.ConnectionField('api.query.appointment.AppointmentConnection')
-    confirmed_appointments = graphene.ConnectionField('api.query.appointment.AppointmentConnection')
+    reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
+    confirmed_reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
 
 
     @staticmethod
@@ -32,30 +32,29 @@ class ClientType(graphene.ObjectType):
     @staticmethod
     def resolve_providers(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
 
-        confirmed_appointments = ClientType.resolve_confirmed_appointments(root, info)
+        reservations = info.context.loaders.client_reservations.load(root.id)
 
-        provider_ids = confirmed_appointments.then(lambda res: [r.provider_id for r in res])
+        appointment_ids = reservations.then(lambda res: [r.appointment_id for r in res])
+        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
+
+        provider_ids = appointments.then(lambda res: [r.provider_id for r in res])
         providers = provider_ids.then(lambda res: [info.context.loaders.provider.load(id_) for id_ in res])
 
         return providers
 
 
     @staticmethod
-    def resolve_reserved_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
-
-        appointment_ids = info.context.loaders.client_reserved_appointments.load(root.id)
-        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
-
-        return appointments
+    def resolve_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+        return info.context.loaders.client_reservations.load(root.id)
 
 
     @staticmethod
-    def resolve_confirmed_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+    def resolve_confirmed_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
 
-        appointment_ids = info.context.loaders.client_confirmed_appointments.load(root.id)
-        appointments = appointment_ids.then(lambda res: [info.context.loaders.appointment.load(id_) for id_ in res])
+        reservations = info.context.loaders.client_reservations.load(root.id)
+        confirmed_reservations = reservations.then(lambda res: [r for r in res if r.confirmed])
 
-        return appointments
+        return confirmed_reservations
 
 
     @classmethod

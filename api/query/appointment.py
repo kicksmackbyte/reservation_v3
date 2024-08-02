@@ -13,7 +13,8 @@ class AppointmentType(graphene.ObjectType):
     time_slot = graphene.DateTime()
     provider = graphene.Field('api.query.provider.ProviderType')
 
-    client = graphene.Field('api.query.client.ClientType')
+    confirmed_reservation = graphene.Field('api.query.reservation.ReservationType')
+    reservations = graphene.ConnectionField('api.query.reservation.ReservationConnection')
 
 
     @staticmethod
@@ -27,12 +28,28 @@ class AppointmentType(graphene.ObjectType):
 
 
     @staticmethod
-    def resolve_client(root: Any, info: graphene.ResolveInfo) -> graphene.String:
+    def resolve_confirmed_reservation(root: Any, info: graphene.ResolveInfo) -> graphene.String:
 
-        reservation = info.context.loaders.confirmed_reservation_from_appointment.load(root.id)
-        client = reservation.then(lambda res: info.context.loaders.client.load(res.client_id) if res else None)
+        def _unbox(res):
 
-        return client
+            confirmed_reservation = None
+
+            if res:
+                assert len(res) == 1
+                confirmed_reservation = res[0]
+
+            return confirmed_reservation
+
+
+        reservations = info.context.loaders.reservations_from_appointment.load(root.id)
+        confirmed_reservation = reservations.then(lambda res: _unbox(res))
+
+        return confirmed_reservation
+
+
+    @staticmethod
+    def resolve_reservations(root: Any, info: graphene.ResolveInfo) -> graphene.String:
+        return info.context.loaders.reservations_from_appointment.load(root.id)
 
 
     @classmethod
