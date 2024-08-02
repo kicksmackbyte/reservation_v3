@@ -16,12 +16,11 @@ django-silk = "*"
 typing-extensions = "*"
 
 [packages]
-django = "==3.2.9"
-graphene-django = "*"
+django = "==4.2.14"
+graphene-django = "==2.16.0"
 psycopg2-binary = "*"
 
 [requires]
 python_version = "3"
 
 [scripts]
-
