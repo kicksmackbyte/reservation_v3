@@ -1,9 +1,11 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
+
+import datetime
 
 
 def calculate_expiry():
-    return datetime.now() + timedelta(minutes=30)
+    return timezone.now() + datetime.timedelta(minutes=30)
 
 
 class ConfirmedAppointmentManager(models.Manager):
@@ -15,7 +17,7 @@ class ConfirmedAppointmentManager(models.Manager):
 class ReservedAppointmentManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(confirmed=False, expiry__lt=datetime.now())
+        return super().get_queryset().filter(confirmed=False, expiry__lt=timezone.now())
 
 
 class Reservation(models.Model):

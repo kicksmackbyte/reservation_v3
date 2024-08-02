@@ -1,6 +1,10 @@
 from django.db import models
 from .reservation import Reservation
+from django.utils import timezone
 
+import datetime
+
+ADVANCED_NOTICE = {'days': 1}
 
 class AvailableAppointmentManager(models.Manager):
 
@@ -9,7 +13,9 @@ class AvailableAppointmentManager(models.Manager):
         reservations = Reservation.confirmed_objects.all() | Reservation.reserved_objects.all()
         appointment_ids = [r.appointment_id for r in reservations]
 
-        return super().get_queryset().exclude(id__in=appointment_ids)
+        advanced_notice = timezone.now() + datetime.timedelta(**ADVANCED_NOTICE)
+
+        return super().get_queryset().exclude(id__in=appointment_ids).exclude(time_slot__lt=advanced_notice)
 
 
 class ConfirmedAppointmentManager(models.Manager):
