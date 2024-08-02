@@ -30,16 +30,16 @@ class ReservationLoaders:
 ```
 
 ## ReservationLoaders.reservation
-Given a primary key, return the [Reservation record](../../reservation/models/reservation.py) associated with that PK
-Batches a call to `Reservation.objects.filter(id__in=[key1, key2, key3])`
+* Given a primary key, return the [Reservation record](../../reservation/models/reservation.py) associated with that PK
+* Batches a call to `Reservation.objects.filter(id__in=[key1, key2, key3])`
 
 
 ## ReservationLoaders.reservations_from_client
-Given a foreign key (i.e. - Reservation.client_id), return the list of [Reservation records](../../reservation/models/reservation.py) associated with that FK
-Batches a call to `Reservation.objects.filter(client_id__in=[key1, key2, key3])`
+* Given a foreign key (i.e. - Reservation.client_id), return the list of [Reservation records](../../reservation/models/reservation.py) associated with that FK
+* Batches a call to `Reservation.objects.filter(client_id__in=[key1, key2, key3])`
 
 
 ## ReservationLoaders.active_reservations_from_client
-Given a foreign key (i.e. - Reservation.client_id), return the list of [Active Reservation records](../../reservation/models/reservation.py) associated with that FK
-Batches a call to `Reservation.active_objects.filter(client_id__in=[key1, key2, key3])`
-Makes use of custom model managers for ease of use and to add commonly used filter conditions
+* Given a foreign key (i.e. - Reservation.client_id), return the list of [Active Reservation records](../../reservation/models/reservation.py) associated with that FK
+* Batches a call to `Reservation.active_objects.filter(client_id__in=[key1, key2, key3])`
+* Makes use of custom model managers for ease of use and to add commonly used filter conditions
