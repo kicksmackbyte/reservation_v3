@@ -13,13 +13,13 @@ class ProviderType(graphene.ObjectType):
     first_name = graphene.String()
     last_name = graphene.String()
 
-    clients = graphene.Field('api.query.client.ClientConnection')
+    clients = graphene.ConnectionField('api.query.client.ClientConnection')
 
-    available_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
-    reserved_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
-    confirmed_appointments = graphene.Field('api.query.appointment.AppointmentConnection')
+    available_appointments = graphene.ConnectionField('api.query.appointment.AppointmentConnection')
+    reserved_appointments = graphene.ConnectionField('api.query.appointment.AppointmentConnection')
+    confirmed_appointments = graphene.ConnectionField('api.query.appointment.AppointmentConnection')
 
-    schedule = graphene.Field('api.query.appointment.AppointmentConnection')
+    schedule = graphene.ConnectionField('api.query.appointment.AppointmentConnection')
 
 
     @staticmethod
