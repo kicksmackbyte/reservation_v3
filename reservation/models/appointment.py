@@ -22,7 +22,8 @@ class ConfirmedAppointmentManager(models.Manager):
 
     def get_queryset(self):
 
-        confirmed_appointment_ids = Reservation.confirmed_objects.all()
+        confirmed_reservations = Reservation.confirmed_objects.all()
+        confirmed_appointment_ids = [r.appointment_id for r in confirmed_reservations]
 
         return super().get_queryset().filter(id__in=confirmed_appointment_ids)
 

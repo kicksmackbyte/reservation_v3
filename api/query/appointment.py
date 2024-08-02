@@ -42,7 +42,8 @@ class AppointmentType(graphene.ObjectType):
 
 
         reservations = info.context.loaders.reservations_from_appointment.load(root.id)
-        confirmed_reservation = reservations.then(lambda res: _unbox(res))
+        confirmed_reservations = reservations.then(lambda res: [r for r in res if r.confirmed])
+        confirmed_reservation = confirmed_reservations.then(lambda res: _unbox(res))
 
         return confirmed_reservation
 
