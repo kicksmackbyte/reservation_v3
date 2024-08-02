@@ -1,4 +1,6 @@
-# models
+# ERD
+[[ERD.png]]
+
 * `appointment.py`
 * `client.py`
 * `provider.py`
