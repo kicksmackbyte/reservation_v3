@@ -1,4 +1,6 @@
 import graphene
+from graphql import GraphQLError
+
 
 from api.utils import from_global_id
 
@@ -17,8 +19,7 @@ class ReservationCreate(graphene.Mutation):
 
         input_ = graphene.Argument(ReservationCreateInput, name='input', required=True)
 
-    client = graphene.Field('api.query.client.ClientType')
-    appointment = graphene.Field('api.query.appointment.AppointmentType')
+    reservation = graphene.Field('api.query.reservation.ReservationType')
 
 
     @classmethod
@@ -33,8 +34,39 @@ class ReservationCreate(graphene.Mutation):
         appointment = Appointment.available_objects.get(id=decoded_appointment_id)
 
         reservation = Reservation.objects.create(client=client, appointment=appointment)
-        return cls(client=client, appointment=appointment)
+        return cls(reservation=reservation)
+
+
+class ReservationConfirmInput(graphene.InputObjectType):
+
+    reservation_id = graphene.ID(required=True)
+
+
+class ReservationConfirm(graphene.Mutation):
+
+    class Arguments:
+
+        input_ = graphene.Argument(ReservationConfirmInput, name='input', required=True)
+
+    reservation = graphene.Field('api.query.reservation.ReservationType')
+
+
+    @classmethod
+    def mutate(cls, root, info, input_):
+
+        reservation_id = input_.pop('reservation_id')
+        decoded_reservation_id = int(from_global_id(reservation_id).type_id)
+        reservation = Reservation.objects.get(id=decoded_reservation_id)
+
+        if reservation.expired:
+            raise GraphQLError('Reservation has expired.')
+
+        reservation.confirmed = True
+        reservation.save(update_fields=['confirmed'])
+
+        return cls(reservation=reservation)
 
 
 class Mutation(graphene.ObjectType):
     reservation_create = ReservationCreate.Field()
+    reservation_confirm = ReservationConfirm.Field()
