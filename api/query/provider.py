@@ -43,7 +43,7 @@ class ProviderType(graphene.ObjectType):
 
 
     @staticmethod
-    def resolve_available_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
+    def resolve_appointments(root: Any, info: graphene.ResolveInfo) -> graphene.Field:
         return info.context.loaders.appointments_from_provider.load(root.id)
 
 
