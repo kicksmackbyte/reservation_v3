@@ -1,13 +1,15 @@
 # Setup
 ## Dependencies
-- docker compose (required)
-    a. tested with latest v2.29.1 release
-- postman (optional)
+* docker compose (required)
+    - tested with latest v2.29.1 release
+* postman (optional)
 
 ## Running
 1. `docker-compose up`
 2. server will be running at http://localhost/graphql
     - can run introspection query on postman to explore schema
+
+## Examples
 
 # Repo Overview
 ## top-level
@@ -19,15 +21,6 @@
 * `Pipfile` + `Pipfile.lock`
     - used by `pipenv` to install dependencies + manage virtualenv
 
-## api
-* module that primarily holds graphene_django-specific code (i.e. - graphQL)
-* `schema.py`
-    - can subclass `graphene.Schema` to manipulate available queries + mutations + types
-* `utils.py`
-    - helper functions to go back and forth from b64encoded, global ids (for relay)
-* `views.py`
-    - attaches context to request for use in all resolvers (i.e. - `info.context`)
-    - good place to attach JWT to request for resolvers to validate permissions
 ### loaders
 * DataLoader for graphQL resolvers to make use of instead of going directly through ORM
 
@@ -91,7 +84,9 @@
 
 ## Deployment
 * CI/CD with GCP Cloud Build
+    - stage gates
 * load balancer
+    - rolling deployments
 * stand up postgreSQL server
 
 ## Developer experience
@@ -99,3 +94,4 @@
 * branch protection
 * githooks to run static analysis, tests, etc.
 * continue adding type hints
+* diagrams
