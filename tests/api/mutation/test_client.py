@@ -15,7 +15,7 @@ class TestClientMutation(TestCase):
         self.request = request_with_loaders()
 
 
-    def test_create_user(self):
+    def test_create_client(self):
 
         variables = {
             'input': {

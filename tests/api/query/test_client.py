@@ -8,7 +8,7 @@ from reservation.models import Client
 from examples.queries import Clients
 from model_bakery import baker
 
-class TestUsersQuery(TestCase):
+class TestClientsQuery(TestCase):
 
 
     def setUp(self):
