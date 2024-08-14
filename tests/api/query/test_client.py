@@ -2,11 +2,12 @@ from django.test import TestCase
 import graphene
 
 from api.query.client import Query
-from tests.api.utils import request_with_loaders
+from tests.api.utils import connection_to_list, request_with_loaders
 from reservation.models import Client
 
 from examples.queries import Clients
 from model_bakery import baker
+
 
 class TestClientsQuery(TestCase):
 
@@ -21,5 +22,8 @@ class TestClientsQuery(TestCase):
 
     def test_clients_query(self):
 
-        result = self.schema.execute(Clients)
+        result = self.schema.execute(Clients, context=self.request)
         self.assertIsNone(result.errors, msg='Errors prevented execution for %s' % Clients)
+
+        clients = connection_to_list(result.data['clients'])
+        self.assertTrue(len(clients) == 10)
