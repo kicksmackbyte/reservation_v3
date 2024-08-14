@@ -1,3 +1,19 @@
+fragment ReservationParts on ReservationType {
+  id
+  expiry
+  confirmed
+  expired
+  appointment {
+    id
+    timeSlot
+    provider {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+
 query Clients {
   clients {
     edges {
@@ -5,6 +21,36 @@ query Clients {
         id
         firstName
         lastName
+        providers {
+          edges {
+            node {
+              id
+              firstName
+              lastName
+            }
+          }
+        }
+        activeReservations {
+          edges {
+            node {
+              ... ReservationParts
+            }
+          }
+        }
+        confirmedReservations {
+          edges {
+            node {
+              ... ReservationParts
+            }
+          }
+        }
+        expiredReservations {
+          edges {
+            node {
+              ... ReservationParts
+            }
+          }
+        }
       }
     }
   }

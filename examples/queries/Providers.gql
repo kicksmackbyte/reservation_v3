@@ -5,6 +5,15 @@ query Providers{
         id
         firstName
         lastName
+        clients {
+          edges {
+            node {
+              id
+              firstName
+              lastName
+            }
+          }
+        }
         availableAppointments {
           edges {
             node {
