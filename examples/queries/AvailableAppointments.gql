@@ -10,14 +10,18 @@ query AvailableAppointments {
           lastName
         }
         reservations {
-          id
-          expiry
-          confirmed
-          expired
-          client {
-            id
-            firstName
-            lastName
+          edges {
+            node {
+              id
+              expiry
+              confirmed
+              expired
+              client {
+                id
+                firstName
+                lastName
+              }
+            }
           }
         }
       }
